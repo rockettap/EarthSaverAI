@@ -7,7 +7,7 @@ defineProps<{
   role?: string
 }>()
 
-const defaultAvatar = '/avatar-default.svg'
+const defaultAvatar = '/EarthSaverAI/avatar-default.svg'
 const avatarImg = ref<HTMLImageElement | null>(null)
 
 function handleImageError() {

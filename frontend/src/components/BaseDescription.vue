@@ -10,7 +10,7 @@ const { alt = 'Image' } = defineProps<Props>()
 <template>
   <div class="section-description">
     <div class="section-description__container container">
-      <img :src="src" :alt="alt" class="section-description__image" />
+      <img :src="`/EarthSaverAI${src}`" :alt="alt" class="section-description__image" />
       <p class="section-description__description">
         <slot />
       </p>
