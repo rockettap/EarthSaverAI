@@ -30,7 +30,7 @@ class Forecast(BaseModel):
                 "hemisphere": "north",
                 "month": 10,
                 "year": 1978,
-                "image": "http://localhost:8000/static/north-images/11.webp",
+                "image": "https://earthsaverai.onrender.com/static/north-images/11.webp",
             }
         }
 
@@ -80,10 +80,10 @@ def get_image_url(hemisphere: HemisphereEnum, extent: float) -> HttpUrl:
 
     for r in ranges:
         if r["min"] <= extent <= r["max"]:
-            url = f"http://localhost:8000/static/{hemisphere.value}-images/optimized/{r['part']}.webp"
+            url = f"https://earthsaverai.onrender.com/static/{hemisphere.value}-images/optimized/{r['part']}.webp"
             return HttpUrl(url)
 
-    return HttpUrl("http://localhost:8000/static/default.webp")
+    return HttpUrl("https://earthsaverai.onrender.com/static/default.webp")
 
 
 def load_forecasts_from_csv(
