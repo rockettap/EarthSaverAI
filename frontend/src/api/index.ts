@@ -4,7 +4,7 @@ export async function fetchForecast(
   selectedYear: number,
   hemisphere: string,
 ): Promise<Forecast[]> {
-  const url = new URL('http://localhost:8000/forecast')
+  const url = new URL('https://earthsaverai.onrender.com/forecast')
   url.searchParams.append('year', selectedYear.toString())
   url.searchParams.append('hemisphere', hemisphere)
 
