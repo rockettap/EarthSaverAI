@@ -28,7 +28,7 @@ import Button from '@/components/BaseButton.vue'
 
   background-image: url('/hero-image-2.webp');
   background-repeat: no-repeat;
-  background-position: 60% 25%;
+  background-position: 50% 25%;
   background-size: 200% auto;
 
   @media (max-width: 768px) {

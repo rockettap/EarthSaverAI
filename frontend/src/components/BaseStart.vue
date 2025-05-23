@@ -59,7 +59,7 @@ defineProps<{
   &__title {
     display: inline-block;
     padding: 21px 96px;
-    font-size: 44px;
+    font-size: clamp(30px, 5vw, 44px);
     font-weight: 600;
     text-align: center;
     background: vars.$secondary-gradient;
@@ -72,6 +72,12 @@ defineProps<{
     font-size: 32px;
     font-weight: 500;
     text-align: center;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }
 </style>

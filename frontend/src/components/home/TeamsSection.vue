@@ -12,13 +12,16 @@ const teamMembers = [
   { name: 'Valeriia Shvaiko', image: '/avatar-3.png' },
   { name: 'Juliia Ilchyshyna', image: '/avatar-4.png' },
   { name: 'Yuliia Holosniak', image: '/avatar-5.png' },
-  { name: 'Myshchak Oleksandr', image: '/avatar-6.png' },
+  { name: 'Oleksandr Myshchak', image: '/avatar-6.png' },
 ]
 </script>
 
 <template>
   <section class="teams" id="teams">
-    <BaseStart :titles="['Teams', 'Teams name']" description="Teams slang" />
+    <BaseStart
+      :titles="['Team', 'EarthSaverAI']"
+      description="EarthSaverAI — Making Climate Forecasting Transparent and Accessible 🌡 🧊"
+    />
 
     <div class="teams__container container">
       <ul class="teams__list">

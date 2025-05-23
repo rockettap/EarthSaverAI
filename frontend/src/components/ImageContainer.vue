@@ -19,7 +19,9 @@ const isSplit =
   props.imageLeftUrl !== undefined && props.imageRightUrl !== undefined
 
 const bgImageLeft = computed(() => `url('/EarthSaverAI${props.imageLeftUrl}')`)
-const bgImageRight = computed(() => `url('/EarthSaverAI${props.imageRightUrl}')`)
+const bgImageRight = computed(
+  () => `url('/EarthSaverAI${props.imageRightUrl}')`,
+)
 const bgImageFull = computed(() => `url('/EarthSaverAI${props.imageFullUrl}')`)
 </script>
 

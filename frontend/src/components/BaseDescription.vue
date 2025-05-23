@@ -10,7 +10,11 @@ const { alt = 'Image' } = defineProps<Props>()
 <template>
   <div class="section-description">
     <div class="section-description__container container">
-      <img :src="`/EarthSaverAI${src}`" :alt="alt" class="section-description__image" />
+      <img
+        :src="`/EarthSaverAI${src}`"
+        :alt="alt"
+        class="section-description__image"
+      />
       <p class="section-description__description">
         <slot />
       </p>
@@ -28,6 +32,7 @@ const { alt = 'Image' } = defineProps<Props>()
   font-size: 22px;
   font-weight: 600;
   line-height: 30px;
+  text-align: justify;
 
   &__container {
     display: flex;
@@ -37,6 +42,10 @@ const { alt = 'Image' } = defineProps<Props>()
     height: 176px;
     align-self: center;
     margin-right: 40px;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 }
 </style>
