@@ -21,6 +21,9 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      - name: Check for lock file
+        run: test -f ./frontend/package-lock.json || echo "Lock file is missing. Please commit package-lock.json."
+    
       - name: Checkout
         uses: actions/checkout@v4
 
