@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, HttpUrl
 from fastapi.staticfiles import StaticFiles
 
-from hemisphere_ranges import *
+from .hemisphere_ranges import *
 
 
 class HemisphereEnum(str, Enum):
