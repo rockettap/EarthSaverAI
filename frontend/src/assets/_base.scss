@@ -1,0 +1,32 @@
+@use 'vars';
+
+a,
+a:visited,
+a:hover,
+a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: vars.$dark-color;
+  font-family: 'Montserrat', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  color: #fff;
+}
+
+.container {
+  max-width: 1352px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.highlighted-text {
+  color: vars.$primary-color;
+}

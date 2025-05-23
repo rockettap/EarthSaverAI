@@ -1,0 +1,20 @@
+@use 'sass:color';
+
+$primary-color: #ff5e00;
+$primary-gradient: linear-gradient(180deg, $primary-color 39%, #ffa068 100%);
+$primary-gradient-darken: linear-gradient(
+  180deg,
+  color.adjust($primary-color, $lightness: -5%) 39%,
+  color.adjust(#ffa068, $lightness: -5%) 100%
+);
+
+$dark-color: #011332;
+$dark-gradient: linear-gradient(180deg, $dark-color 39%, #8cbae6 100%);
+
+$secondary-gradient: linear-gradient(180deg, #476aa4 0%, #011c49 100%);
+
+$section-background-light-color: #8cbae6;
+
+$container-width: 1352px;
+$header-height-desktop: 100px;
+$header-height-mobile: 72px;
