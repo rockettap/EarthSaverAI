@@ -9,7 +9,11 @@ defineProps<{
     <div class="header__container container">
       <nav class="nav" v-if="isHomePage">
         <div class="nav__sub" style="margin-right: 12px">
-          <RouterLink to="/" class="nav__link">Home</RouterLink>
+          <a
+            href="https://drive.google.com/file/d/1kJ77gAcohqSyZvovVUlOftC8TIb12hn4/view"
+            class="nav__link"
+            >Documentation</a
+          >
           <a href="#information" class="nav__link">Information</a>
         </div>
 
@@ -18,7 +22,7 @@ defineProps<{
         </div>
 
         <div class="nav__sub" style="margin-left: 12px">
-          <a href="#teams" class="nav__link">Teams</a>
+          <a href="#team" class="nav__link">Team</a>
           <a href="#contacts" class="nav__link">Contacts</a>
         </div>
       </nav>
@@ -47,7 +51,7 @@ defineProps<{
   align-items: center;
   justify-content: space-between;
 
-  @media (max-width: 768px) {
+  @media (max-width: 992px) {
     overflow-x: auto;
     height: vars.$header-height-mobile;
   }
@@ -80,7 +84,7 @@ defineProps<{
   align-items: center;
   height: 100%;
 
-  @media (max-width: 768px) {
+  @media (max-width: 992px) {
     &--hide {
       display: none;
     }
