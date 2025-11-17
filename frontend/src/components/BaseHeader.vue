@@ -8,23 +8,19 @@ defineProps<{
   <header class="header">
     <div class="header__container container">
       <nav class="nav" v-if="isHomePage">
-        <div class="nav__sub" style="margin-right: 12px">
+        <div class="nav__sub">
           <a
             href="https://drive.google.com/file/d/1kJ77gAcohqSyZvovVUlOftC8TIb12hn4/view"
             class="nav__link"
             >Documentation</a
           >
           <a href="#information" class="nav__link">Information</a>
-        </div>
-
-        <div class="nav__welcome nav__welcome--hide">
-          <RouterLink to="/" class="nav__link">Welcome</RouterLink>
-        </div>
-
-        <div class="nav__sub" style="margin-left: 12px">
-          <a href="#team" class="nav__link">Team</a>
           <a href="#contacts" class="nav__link">Contacts</a>
         </div>
+
+        <!-- <div class="nav__welcome nav__welcome--hide">
+          <RouterLink to="/" class="nav__link">Welcome</RouterLink>
+        </div> -->
       </nav>
       <nav class="nav" v-else>
         <div class="nav__welcome">
@@ -62,8 +58,8 @@ defineProps<{
   color: vars.$dark-color;
   font-size: 22px;
   display: flex;
-  justify-content: space-between;
   flex-grow: 1;
+  justify-content: center;
 }
 
 .nav__sub {

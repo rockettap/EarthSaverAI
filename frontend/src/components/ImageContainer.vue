@@ -18,11 +18,11 @@ const props = defineProps<SplitProps | FullProps>()
 const isSplit =
   props.imageLeftUrl !== undefined && props.imageRightUrl !== undefined
 
-const bgImageLeft = computed(() => `url('/EarthSaverAI${props.imageLeftUrl}')`)
+const bgImageLeft = computed(() => `url('/EarthSaverAI/${props.imageLeftUrl}')`)
 const bgImageRight = computed(
-  () => `url('/EarthSaverAI${props.imageRightUrl}')`,
+  () => `url('/EarthSaverAI/${props.imageRightUrl}')`,
 )
-const bgImageFull = computed(() => `url('/EarthSaverAI${props.imageFullUrl}')`)
+const bgImageFull = computed(() => `url('/EarthSaverAI/${props.imageFullUrl}')`)
 </script>
 
 <template>

@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import Footer from '@/components/BaseFooter.vue'
 import BenefitSection from '@/components/home/BenefitSection.vue'
-// import ContactsSection from '@/components/home/ContactsSection.vue'
 import HeroSection from '@/components/home/HeroSection.vue'
 import ImpactSection from '@/components/home/ImpactSection.vue'
-import TeamsSection from '@/components/home/TeamsSection.vue'
 </script>
 
 <template>
@@ -14,10 +12,6 @@ import TeamsSection from '@/components/home/TeamsSection.vue'
     <BenefitSection />
 
     <ImpactSection />
-
-    <TeamsSection />
-
-    <!-- <ContactsSection /> -->
 
     <Footer />
   </main>

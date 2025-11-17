@@ -11,7 +11,7 @@ const { alt = 'Image' } = defineProps<Props>()
   <div class="section-description">
     <div class="section-description__container container">
       <img
-        :src="`/EarthSaverAI${src}`"
+        :src="`${src}`"
         :alt="alt"
         class="section-description__image"
       />
@@ -28,10 +28,10 @@ const { alt = 'Image' } = defineProps<Props>()
 .section-description {
   background-color: #fff;
   color: #000;
-  padding: 40px 0;
-  font-size: 22px;
+  padding: 2.5rem 0;
+  font-size: clamp(1rem, 0.8598rem + 0.6098vw, 1.375rem);
   font-weight: 600;
-  line-height: 30px;
+  line-height: 1.4;
   text-align: justify;
 
   &__container {
@@ -39,11 +39,11 @@ const { alt = 'Image' } = defineProps<Props>()
   }
 
   &__image {
-    height: 176px;
+    height: 11rem;
     align-self: center;
-    margin-right: 40px;
+    margin-right: 2.5rem;
 
-    @media (max-width: 768px) {
+    @media (max-width: 992px) {
       display: none;
     }
   }

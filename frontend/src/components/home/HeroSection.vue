@@ -19,6 +19,7 @@ import Button from '@/components/BaseButton.vue'
 @use '@/assets/vars';
 
 .hero {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,28 +29,51 @@ import Button from '@/components/BaseButton.vue'
 
   background-image: url('/hero-image-2.webp');
   background-repeat: no-repeat;
-  background-position: 50% 25%;
-  background-size: 200% auto;
+  background-position: center 50%;
+  background-size: cover;
+  overflow: hidden;
 
-  @media (max-width: 768px) {
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4px);
+    z-index: 0;
+  }
+
+  @media (max-width: 992px) {
     min-height: calc(100svh - vars.$header-height-mobile);
-    background-position: 60% 30%;
-    background-size: 250% auto;
+    background-position: center top;
+    background-size: cover;
+  }
+
+  &__container {
+    position: relative;
+    z-index: 1;
   }
 }
 
 .hero__image {
   height: 250px;
+  max-width: 100%;
 }
 
 .hero__title {
-  font-size: clamp(3rem, 2.6479rem + 1.5023vw, 4rem);
+  font-size: clamp(2.5rem, 1.939rem + 2.439vw, 4rem);
   margin: 0.875rem 0;
 }
 
 .hero__description {
-  font-size: 18px;
+  font-size: clamp(1rem, 0.9533rem + 0.2033vw, 1.125rem);
   font-weight: 600;
-  margin-bottom: 32px;
+  margin-bottom: 2rem;
+}
+
+.highlighted-text {
+  color: vars.$primary-color;
 }
 </style>

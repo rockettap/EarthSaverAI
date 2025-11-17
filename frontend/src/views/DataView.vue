@@ -199,7 +199,7 @@ onUnmounted(() => {
     padding-top: 24px;
     padding-bottom: 24px;
 
-    @media (max-width: 768px) {
+    @media (max-width: 992px) {
       min-height: calc(100svh - vars.$header-height-mobile);
     }
   }

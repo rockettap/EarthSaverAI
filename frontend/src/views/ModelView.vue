@@ -58,6 +58,7 @@ const maxSliderIndex = computed(() => {
         height: 500px;
         --divider-color: #011332;
         --default-handle-color: #011332;
+        --divider-width: 3px;
       "
       v-if="store.fetchedYears[0] && store.fetchedYears[1]"
     >

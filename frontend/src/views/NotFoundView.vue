@@ -16,7 +16,7 @@ div {
   min-height: calc(100svh - vars.$header-height-desktop);
   padding: 24px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 992px) {
     min-height: calc(100svh - vars.$header-height-mobile);
   }
 }

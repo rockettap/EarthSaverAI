@@ -132,8 +132,8 @@ import ImageContainer from '@/components/ImageContainer.vue'
 
     &--text {
       align-self: flex-start;
-      font-size: 1.5rem;
-      line-height: 1.875rem;
+      font-size: clamp(1rem, 0.8598rem + 0.6098vw, 1.375rem);
+      line-height: 1.4;
       font-weight: 600;
       margin-top: 0.375rem;
 

@@ -24,17 +24,11 @@ for (let year = 1978; year <= 2100; ++year) {
 }
 
 function search() {
-  if (!selectedHemisphere.value || !selectedYear.value) {
-    return
-  }
+  if (!selectedHemisphere.value || !selectedYear.value) return
 
-  if (!store.selectedHemisphere) {
+  if (!store.selectedHemisphere)
     store.selectedHemisphere = selectedHemisphere.value
-  }
-
-  if (!store.selectedYears[0]) {
-    store.selectedYears[0] = +selectedYear.value
-  }
+  if (!store.selectedYears[0]) store.selectedYears[0] = +selectedYear.value
 
   router.push({ name: 'data-table' })
 }
@@ -75,55 +69,40 @@ function search() {
 <style lang="scss" scoped>
 @use '@/assets/vars';
 
-// .search {
-//   &__container {
-//     display: flex;
-//     flex-direction: column;
-//     align-items: center;
-//     justify-content: center;
-//     min-height: calc(100svh - vars.$header-height-desktop);
-//     gap: 32px;
-//     padding-top: 24px;
-//     padding-bottom: 24px;
-
-//     @media (max-width: 768px) {
-//       min-height: calc(100svh - vars.$header-height-mobile);
-//     }
-//   }
-
-//   &__content {
-//     background: linear-gradient(-45deg, #c5c5c5, #fff);
-//     border: 3px #6f6f6f solid;
-//     border-radius: 20px;
-//     padding: 60px;
-//     color: vars.$dark-color;
-//     max-width: 620px;
-//     width: 100%;
-//   }
-// }
-
 .search {
+  position: relative;
   background-image: url('/hero-image-2.webp');
   background-repeat: no-repeat;
-  background-position: 60% 25%;
-  background-size: 200% auto;
+  background-position: center 50%;
+  background-size: cover;
+  overflow: hidden;
 
-  @media (max-width: 768px) {
-    background-position: 60% 30%;
-    background-size: 250% auto;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4px);
+    z-index: 0;
+  }
+
+  @media (max-width: 992px) {
+    background-position: center top;
+    background-size: cover;
   }
 
   &__container {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: calc(100svh - vars.$header-height-desktop);
     gap: 32px;
-    padding-top: 24px;
-    padding-bottom: 24px;
+    padding: 0 24px;
 
-    @media (max-width: 768px) {
+    @media (max-width: 992px) {
       min-height: calc(100svh - vars.$header-height-mobile);
     }
   }
