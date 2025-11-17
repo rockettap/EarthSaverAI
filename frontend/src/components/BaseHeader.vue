@@ -1,7 +1,23 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
+
 defineProps<{
   isHomePage: boolean
 }>()
+
+/**
+ * Smooth scroll to element by hash
+ */
+function scrollToHash(event: Event) {
+  const target = event.currentTarget as HTMLAnchorElement
+  const hash = target.hash
+  if (!hash) return
+  const el = document.querySelector(hash)
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' })
+    event.preventDefault()
+  }
+}
 </script>
 
 <template>
@@ -11,17 +27,23 @@ defineProps<{
         <div class="nav__sub">
           <a
             href="https://drive.google.com/file/d/1kJ77gAcohqSyZvovVUlOftC8TIb12hn4/view"
+            target="_blank"
+            rel="noopener noreferrer"
             class="nav__link"
-            >Documentation</a
           >
-          <a href="#information" class="nav__link">Information</a>
-          <a href="#contacts" class="nav__link">Contacts</a>
-        </div>
+            Documentation
+          </a>
 
-        <!-- <div class="nav__welcome nav__welcome--hide">
-          <RouterLink to="/" class="nav__link">Welcome</RouterLink>
-        </div> -->
+          <a href="#information" class="nav__link" @click="scrollToHash"
+            >Information</a
+          >
+          <a href="#contacts" class="nav__link" @click="scrollToHash"
+            >Contacts</a
+          >
+        </div>
       </nav>
+
+      <!-- Other Pages Navigation -->
       <nav class="nav" v-else>
         <div class="nav__welcome">
           <RouterLink to="/" class="nav__link">
