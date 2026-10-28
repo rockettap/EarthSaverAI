@@ -1,8 +1,10 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const currentYear = new Date().getFullYear()
+</script>
 
 <template>
   <footer class="footer" id="contacts">
-    <p>2025 © EarthSaverAI</p>
+    <p>{{ currentYear }} © EarthSaverAI</p>
     <p>
       E-mail:
       <a href="mailto:ecomindinnovators@ukr.net">ecomindinnovators@ukr.net</a>

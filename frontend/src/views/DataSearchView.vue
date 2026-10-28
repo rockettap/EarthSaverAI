@@ -7,30 +7,47 @@ import { Hemisphere } from '@/types'
 
 import Button from '@/components/BaseButton.vue'
 
+import {
+  FIRST_YEAR,
+  LAST_YEAR,
+  parseYear,
+  yearOptions as years,
+} from '@/constants'
+import { selectionToQuery } from '@/router/selection'
+
 const store = useStore()
 const router = useRouter()
 
 const selectedHemisphere = ref<Hemisphere | null>(null)
 const selectedYear = ref<string | null>(null)
+const hemisphereError = ref('')
+const yearError = ref('')
 
 const hemisphereItems = [
   { title: 'Northern', value: Hemisphere.Northern },
   { title: 'Southern', value: Hemisphere.Southern },
 ]
 
-const years: string[] = []
-for (let year = 1978; year <= 2100; ++year) {
-  years.push(year.toString())
-}
-
 function search() {
-  if (!selectedHemisphere.value || !selectedYear.value) return
+  hemisphereError.value = selectedHemisphere.value ? '' : 'Choose a hemisphere'
+  const year = parseYear(selectedYear.value)
+  yearError.value =
+    year === null ? `Choose a year between ${FIRST_YEAR} and ${LAST_YEAR}` : ''
 
-  if (!store.selectedHemisphere)
-    store.selectedHemisphere = selectedHemisphere.value
-  if (!store.selectedYears[0]) store.selectedYears[0] = +selectedYear.value
+  if (!selectedHemisphere.value || year === null) return
 
-  router.push({ name: 'data-table' })
+  selectedYear.value = year.toString()
+  store.selectedHemisphere = selectedHemisphere.value
+  store.selectedYears = [year]
+  store.fetchedYears = []
+
+  router.push({
+    name: 'data-table',
+    query: selectionToQuery({
+      hemisphere: selectedHemisphere.value,
+      years: [year],
+    }),
+  })
 }
 </script>
 
@@ -45,6 +62,8 @@ function search() {
           variant="underlined"
           append-inner-icon="solar-globus"
           class="mb-5"
+          :error-messages="hemisphereError"
+          @update:model-value="hemisphereError = ''"
         ></v-select>
         <v-combobox
           v-model="selectedYear"
@@ -52,6 +71,8 @@ function search() {
           label="Choose a year"
           variant="underlined"
           append-inner-icon="fluent-calendar"
+          :error-messages="yearError"
+          @update:model-value="yearError = ''"
         ></v-combobox>
       </div>
       <div class="search__disclaimer">

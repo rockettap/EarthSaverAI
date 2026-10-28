@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 import { useStore } from '@/stores'
 
@@ -38,6 +38,11 @@ Chart.defaults.color = '#000'
 onMounted(() => {
   if (!chartCanvas.value) return
   createChart()
+})
+
+onBeforeUnmount(() => {
+  chartInstance?.destroy()
+  chartInstance = null
 })
 
 const createChart = () => {

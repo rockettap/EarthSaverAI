@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
+import { assetUrl } from '@/utils/assetUrl'
+
 type SplitProps = {
   imageLeftUrl: string
   imageRightUrl: string
@@ -18,11 +20,11 @@ const props = defineProps<SplitProps | FullProps>()
 const isSplit =
   props.imageLeftUrl !== undefined && props.imageRightUrl !== undefined
 
-const bgImageLeft = computed(() => `url('/EarthSaverAI/${props.imageLeftUrl}')`)
-const bgImageRight = computed(
-  () => `url('/EarthSaverAI/${props.imageRightUrl}')`,
-)
-const bgImageFull = computed(() => `url('/EarthSaverAI/${props.imageFullUrl}')`)
+const bgImage = (url?: string) => `url('${assetUrl(url ?? '')}')`
+
+const bgImageLeft = computed(() => bgImage(props.imageLeftUrl))
+const bgImageRight = computed(() => bgImage(props.imageRightUrl))
+const bgImageFull = computed(() => bgImage(props.imageFullUrl))
 </script>
 
 <template>

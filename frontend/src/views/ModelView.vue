@@ -8,11 +8,15 @@ import { ImgComparisonSlider } from '@img-comparison-slider/vue'
 const store = useStore()
 
 const sliderValue = ref<number>(0)
+// The web component shows a blue focus ring; skip it for pointer interaction
+// but keep it when the slider is reached with the keyboard.
+const pointerFocused = ref(false)
 
 const maxSliderIndex = computed(() => {
-  const years = store.fetchedYears
-  if (!years || years.length < 1) return 0
-  const lengths = years.map((year) => year.length)
+  const lengths = store.fetchedYears
+    .map((year) => year.length)
+    .filter((length) => length > 0)
+  if (!lengths.length) return 0
   return Math.min(...lengths) - 1
 })
 </script>
@@ -32,7 +36,7 @@ const maxSliderIndex = computed(() => {
           margin: 0 10px 0 20px;
           text-align: center;
         "
-        v-if="store.fetchedYears[0]"
+        v-if="store.fetchedYears[0]?.[0]"
       >
         {{ store.fetchedYears[0][0].year.toString() }} year
       </h3>
@@ -46,7 +50,7 @@ const maxSliderIndex = computed(() => {
           margin: 0 20px 0 10px;
           text-align: center;
         "
-        v-if="store.fetchedYears[1]"
+        v-if="store.fetchedYears[1]?.[0]"
       >
         {{ store.fetchedYears[1][0].year.toString() }} year
       </h3>
@@ -60,17 +64,21 @@ const maxSliderIndex = computed(() => {
         --default-handle-color: #011332;
         --divider-width: 3px;
       "
-      v-if="store.fetchedYears[0] && store.fetchedYears[1]"
+      :class="{ 'comparison-slider--pointer': pointerFocused }"
+      @pointerdown="pointerFocused = true"
+      @keydown="pointerFocused = false"
+      @blur="pointerFocused = false"
+      v-if="store.fetchedYears[0]?.[0] && store.fetchedYears[1]?.[0]"
     >
       <img
         slot="first"
         style="width: 100%; height: 500px; object-fit: cover; display: block"
-        :src="store.fetchedYears[0][sliderValue].image"
+        :src="store.fetchedYears[0]?.[sliderValue]?.image"
       />
       <img
         slot="second"
         style="width: 100%; height: 500px; object-fit: cover; display: block"
-        :src="store.fetchedYears[1][sliderValue].image"
+        :src="store.fetchedYears[1]?.[sliderValue]?.image"
       />
     </ImgComparisonSlider>
     <img
@@ -81,8 +89,8 @@ const maxSliderIndex = computed(() => {
         display: flex;
         border: 3px solid #011332;
       "
-      :src="store.fetchedYears[0][sliderValue].image"
-      v-else
+      :src="store.fetchedYears[0]?.[sliderValue]?.image"
+      v-else-if="store.fetchedYears[0]?.[0]"
     />
     <v-slider
       v-model="sliderValue"
@@ -95,4 +103,8 @@ const maxSliderIndex = computed(() => {
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+:deep(.comparison-slider--pointer:focus) {
+  outline: none;
+}
+</style>

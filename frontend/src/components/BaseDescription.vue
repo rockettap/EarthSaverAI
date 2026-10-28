@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { assetUrl } from '@/utils/assetUrl'
+
 interface Props {
   src: string
   alt?: string
@@ -10,7 +12,7 @@ const { alt = 'Image' } = defineProps<Props>()
 <template>
   <div class="section-description">
     <div class="section-description__container container">
-      <img :src="`${src}`" :alt="alt" class="section-description__image" />
+      <img :src="assetUrl(src)" :alt="alt" class="section-description__image" />
       <p class="section-description__description">
         <slot />
       </p>

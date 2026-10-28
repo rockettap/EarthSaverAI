@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, onUnmounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import { useStore } from '@/stores'
@@ -7,7 +7,14 @@ import { useStore } from '@/stores'
 import Button from '@/components/BaseButton.vue'
 import LoadingOverlay from '@/components/LoadingOverlay.vue'
 
-import { fetchForecast } from '@/api'
+import { ForecastApiError, fetchForecast } from '@/api'
+import {
+  FIRST_YEAR,
+  LAST_YEAR,
+  parseYear,
+  yearOptions as years,
+} from '@/constants'
+import { parseSelectionQuery, selectionToQuery } from '@/router/selection'
 
 const store = useStore()
 const route = useRoute()
@@ -27,36 +34,54 @@ const selectedMenuItem = computed(() => {
   )
   return foundItem?.[0] as (typeof menuItems)[number] | undefined
 })
+
+const routeSelection = computed(() => parseSelectionQuery(route.query))
 const selectedYear = ref<string | null>(null)
+const dialogYearError = ref('')
 const showDialog = ref(false)
 
 const loading = ref(true)
 const error = ref<string | null>(null)
 
-const years: string[] = []
-for (let year = 1978; year <= 2100; ++year) {
-  years.push(year.toString())
-}
-
 function navigateToMenu(item: (typeof menuItems)[number]) {
   const routeName = menuToRouteMap[item]
   if (routeName) {
-    router.push({ name: routeName })
+    router.push({ name: routeName, query: route.query })
   }
 }
 
 function addDialog() {
-  if (selectedYear.value && !isNaN(+selectedYear.value)) {
-    store.addYear(+selectedYear.value)
-    showDialog.value = false
-    load()
+  const selection = routeSelection.value
+  if (!selection) return
+
+  const year = parseYear(selectedYear.value)
+
+  if (year === null) {
+    dialogYearError.value = `Enter a year between ${FIRST_YEAR} and ${LAST_YEAR}`
+    return
   }
+
+  if (selection.years.includes(year)) {
+    dialogYearError.value = 'This year is already selected'
+    return
+  }
+
+  dialogYearError.value = ''
+  showDialog.value = false
+
+  void router.replace({
+    query: selectionToQuery({
+      hemisphere: selection.hemisphere,
+      years: [...selection.years, year].slice(0, 2),
+    }),
+  })
 }
 
 function closeDialog() {
   if (showDialog.value) {
     showDialog.value = false
   }
+  dialogYearError.value = ''
 }
 
 function back() {
@@ -91,41 +116,77 @@ function preloadImages(imageUrls: string[]): Promise<void> {
   })
 }
 
+function getLoadErrorMessage(err: unknown): string {
+  if (err instanceof ForecastApiError && err.status === 404) {
+    return 'No forecast data is available for the selected year and hemisphere. Please choose another year.'
+  }
+
+  if (err instanceof ForecastApiError && err.status === 422) {
+    return `The selected year is not valid. Please choose a year between ${FIRST_YEAR} and ${LAST_YEAR}.`
+  }
+
+  if (!navigator.onLine) {
+    return 'You appear to be offline. Check your connection and try again.'
+  }
+
+  return 'Could not load the forecast. The forecast service may be starting up, so please try again in a moment.'
+}
+
 async function load() {
   try {
     loading.value = true
+    error.value = null
 
-    const years = store.selectedYears
+    const selectedYears = [...store.selectedYears]
     const hemisphere = store.selectedHemisphere
 
-    if (years.length && hemisphere) {
-      const temp = []
-      for (const year of years) {
-        const data = await fetchForecast(year, hemisphere)
-        temp.push(data)
-      }
-
-      store.fetchedYears = []
-      for (const data of temp) {
-        store.addFetchedYear(data)
-      }
-    } else {
-      throw new Error()
+    if (!selectedYears.length || !hemisphere) {
+      error.value =
+        'No forecast selected. Go back and choose a hemisphere and year.'
+      return
     }
+
+    const temp = await Promise.all(
+      selectedYears.map((year) => fetchForecast(year, hemisphere)),
+    )
+
+    store.fetchedYears = temp
 
     const imageUrls = store.fetchedYears.flat().map((item) => item.image)
     await preloadImages(imageUrls)
   } catch (err) {
-    error.value = err instanceof Error ? err.message : 'An error occurred'
+    error.value = getLoadErrorMessage(err)
     console.error(err)
   } finally {
     loading.value = false
   }
 }
 
-onMounted(async () => {
-  await load()
-})
+function retry() {
+  void load()
+}
+
+watch(
+  () =>
+    routeSelection.value
+      ? `${routeSelection.value.hemisphere}:${routeSelection.value.years.join(',')}`
+      : null,
+  () => {
+    const selection = routeSelection.value
+
+    if (!selection) {
+      if (String(route.name ?? '').startsWith('data-')) {
+        void router.replace({ name: 'search' })
+      }
+      return
+    }
+
+    store.selectedHemisphere = selection.hemisphere
+    store.selectedYears = selection.years
+    void load()
+  },
+  { immediate: true },
+)
 
 onUnmounted(() => {
   store.clear()
@@ -144,6 +205,8 @@ onUnmounted(() => {
           label="Choose a year"
           variant="underlined"
           append-inner-icon="fluent-calendar"
+          :error-messages="dialogYearError"
+          @update:model-value="dialogYearError = ''"
         ></v-combobox>
         <div class="dialog__actions">
           <Button @click="closeDialog" variant="compact" color="blue">
@@ -169,14 +232,21 @@ onUnmounted(() => {
         </li>
       </ul>
       <div class="test__content">
-        <h1 v-if="error">{{ error }}</h1>
-        <RouterView />
+        <h1 v-if="error" role="alert">{{ error }}</h1>
+        <RouterView v-if="!error" />
       </div>
-      <div class="test__actions" v-if="!error">
-        <button @click="back" class="test__button test__button">Back</button>
+      <div class="test__actions">
+        <button v-if="error" @click="retry" class="test__button">Retry</button>
+        <button
+          @click="back"
+          class="test__button"
+          :class="{ 'test__button--secondary': error }"
+        >
+          Back
+        </button>
         <button
           @click="toggleDialog"
-          v-if="store.fetchedYears.length !== 2"
+          v-if="!error && store.fetchedYears.length !== 2"
           class="test__button test__button--secondary"
         >
           Compare

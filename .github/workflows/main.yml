@@ -21,35 +21,34 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Check for lock file
-        run: test -f ./frontend/package-lock.json || echo "Lock file is missing. Please commit package-lock.json."
-    
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v7
         with:
           cache-dependency-path: ./frontend/package-lock.json
-          node-version: 23
+          node-version: 24
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
         working-directory: ./frontend
 
       - name: Build
         run: npm run build
         working-directory: ./frontend
+        env:
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
 
       - name: Setup Pages
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@v6
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: './frontend/dist'
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

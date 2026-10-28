@@ -1,7 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
-import { useStore } from '@/stores'
-
+import { parseSelectionQuery } from '@/router/selection'
 import DataView from '@/views/DataView.vue'
 import HomeView from '@/views/HomeView.vue'
 import TableView from '@/views/TableView.vue'
@@ -21,13 +20,9 @@ const router = createRouter({
     },
     {
       path: '/data',
-      beforeEnter: (to, from, next) => {
-        const store = useStore()
-
-        if (!store.selectedHemisphere || !store.selectedYears.length) {
-          next({ name: 'search' })
-        } else {
-          next()
+      beforeEnter: (to) => {
+        if (!parseSelectionQuery(to.query)) {
+          return { name: 'search' }
         }
       },
       children: [

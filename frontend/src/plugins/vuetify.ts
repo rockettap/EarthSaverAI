@@ -21,6 +21,10 @@ const vuetify = createVuetify({
       custom,
     },
   },
+  // Vuetify 4 defaults to the system theme; keep the app's original light theme.
+  theme: {
+    defaultTheme: 'light',
+  },
 })
 
 export default vuetify
