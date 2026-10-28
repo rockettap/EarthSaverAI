@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import BaseDescription from '@/components/BaseDescription.vue'
 import BaseStart from '@/components/BaseStart.vue'
+
+import { assetUrl } from '@/utils/assetUrl'
 </script>
 
 <template>
@@ -11,8 +13,8 @@ import BaseStart from '@/components/BaseStart.vue'
       <ul class="benefit__list">
         <li class="benefit__item">
           <img
-            src="/benefit-image-1.svg"
-            alt="AI"
+            :src="assetUrl('/icons/icons8-automation-100.png')"
+            alt="Automation"
             class="benefit__item-image"
           />
           <h3 class="benefit__item-title">Automation</h3>
@@ -22,8 +24,8 @@ import BaseStart from '@/components/BaseStart.vue'
         </li>
         <li class="benefit__item">
           <img
-            src="/benefit-image-1.svg"
-            alt="AI"
+            :src="assetUrl('/icons/icons8-speedometer-100.png')"
+            alt="Fast analysis"
             class="benefit__item-image"
           />
           <h3 class="benefit__item-title">Fast analysis</h3>
@@ -33,8 +35,8 @@ import BaseStart from '@/components/BaseStart.vue'
         </li>
         <li class="benefit__item">
           <img
-            src="/benefit-image-1.svg"
-            alt="AI"
+            :src="assetUrl('/icons/icons8-aim-100.png')"
+            alt="Precision"
             class="benefit__item-image"
           />
           <h3 class="benefit__item-title">Precision</h3>
@@ -44,8 +46,8 @@ import BaseStart from '@/components/BaseStart.vue'
         </li>
         <li class="benefit__item">
           <img
-            src="/benefit-image-1.svg"
-            alt="AI"
+            :src="assetUrl('/icons/icons8-puzzle-100.png')"
+            alt="Flexibility"
             class="benefit__item-image"
           />
           <h3 class="benefit__item-title">Flexibility</h3>
@@ -90,9 +92,14 @@ import BaseStart from '@/components/BaseStart.vue'
   text-align: center;
 
   &-image {
+    width: 141px;
+    height: 141px;
+    border-radius: 50%;
+    object-fit: cover;
     margin-bottom: 27px;
     margin-left: auto;
     margin-right: auto;
+    display: block;
   }
 
   &-title {
