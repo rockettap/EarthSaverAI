@@ -12,44 +12,52 @@ import { assetUrl } from '@/utils/assetUrl'
     <div class="benefit__container container">
       <ul class="benefit__list">
         <li class="benefit__item">
-          <img
-            :src="assetUrl('/icons/icons8-automation-100.png')"
-            alt="Automation"
-            class="benefit__item-image"
-          />
+          <div class="benefit__item-image-circle">
+            <img
+              :src="assetUrl('/icons/icons8-automation-100.png')"
+              alt="Automation"
+              class="benefit__item-image"
+            />
+          </div>
           <h3 class="benefit__item-title">Automation</h3>
           <p class="benefit__item-description">
             AI performs routine and repetitive tasks without human intervention.
           </p>
         </li>
         <li class="benefit__item">
-          <img
-            :src="assetUrl('/icons/icons8-speedometer-100.png')"
-            alt="Fast analysis"
-            class="benefit__item-image"
-          />
+          <div class="benefit__item-image-circle">
+            <img
+              :src="assetUrl('/icons/icons8-speedometer-100.png')"
+              alt="Fast analysis"
+              class="benefit__item-image"
+            />
+          </div>
           <h3 class="benefit__item-title">Fast analysis</h3>
           <p class="benefit__item-description">
             Artificial intelligence can process huge amounts of information.
           </p>
         </li>
         <li class="benefit__item">
-          <img
-            :src="assetUrl('/icons/icons8-aim-100.png')"
-            alt="Precision"
-            class="benefit__item-image"
-          />
+          <div class="benefit__item-image-circle">
+            <img
+              :src="assetUrl('/icons/icons8-aim-100.png')"
+              alt="Precision"
+              class="benefit__item-image"
+            />
+          </div>
           <h3 class="benefit__item-title">Precision</h3>
           <p class="benefit__item-description">
             Minimizes human errors in calculations and forecasts.
           </p>
         </li>
         <li class="benefit__item">
-          <img
-            :src="assetUrl('/icons/icons8-puzzle-100.png')"
-            alt="Flexibility"
-            class="benefit__item-image"
-          />
+          <div class="benefit__item-image-circle">
+            <img
+              :src="assetUrl('/icons/icons8-puzzle-100.png')"
+              alt="Flexibility"
+              class="benefit__item-image"
+            />
+          </div>
           <h3 class="benefit__item-title">Flexibility</h3>
           <p class="benefit__item-description">
             Used in various fields: from medicine to business.
@@ -91,15 +99,21 @@ import { assetUrl } from '@/utils/assetUrl'
   padding: 32px 24px;
   text-align: center;
 
-  &-image {
+  &-image-circle {
     width: 141px;
     height: 141px;
     border-radius: 50%;
+    background-color: #8cbae6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 27px;
+  }
+
+  &-image {
+    width: 100px;
+    height: 100px;
     object-fit: cover;
-    margin-bottom: 27px;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
   }
 
   &-title {
@@ -118,7 +132,7 @@ import { assetUrl } from '@/utils/assetUrl'
   @media (min-width: 640px) {
     text-align: left;
 
-    &-image {
+    &-image-circle {
       margin-left: 0;
       margin-right: 0;
     }
