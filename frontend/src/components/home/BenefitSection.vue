@@ -100,8 +100,8 @@ import { assetUrl } from '@/utils/assetUrl'
   text-align: center;
 
   &-image-circle {
-    width: 141px;
-    height: 141px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     background-color: #8cbae6;
     display: flex;
