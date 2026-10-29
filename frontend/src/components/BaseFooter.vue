@@ -10,7 +10,7 @@ const currentYear = new Date().getFullYear()
       <a href="mailto:ecomindinnovators@ukr.net">ecomindinnovators@ukr.net</a>
     </p>
     <p>
-      Icons by{' '}
+      Icons by
       <a href="https://icons8.com" target="_blank" rel="noopener">Icons8</a>
     </p>
   </footer>
